@@ -1,3 +1,4 @@
+// filepath: /d:/Doni/dilan/dilan/projects/shell/src/app/pages/pages-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 

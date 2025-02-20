@@ -38,7 +38,7 @@
 
     span {
         outline: none !important;
-        color: var(--#{$prefix}choices-link-color);
+        // color: var(--#{$prefix}choices-link-color);
 
         &:hover {
             color: $primary !important;

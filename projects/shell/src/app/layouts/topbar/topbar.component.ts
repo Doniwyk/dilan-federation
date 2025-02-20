@@ -40,17 +40,9 @@ export class TopbarComponent implements OnInit {
   total = 0;
   cart_length: any = 0;
 
-  constructor(
-    // @Inject(DOCUMENT) private document: any,
-    private eventService: EventService,
-    public languageService: LanguageService,
-    public _cookiesService: CookieService,
-    public translate: TranslateService,
-    private authService: AuthenticationService,
-    private authFackservice: AuthfakeauthenticationService,
-    private router: Router,
-    private TokenStorageService: TokenStorageService
-  ) { }
+  constructor(@Inject(DOCUMENT) private document: any, private eventService: EventService, public languageService: LanguageService,
+    public _cookiesService: CookieService, public translate: TranslateService, private authService: AuthenticationService, private authFackservice: AuthfakeauthenticationService,
+    private router: Router, private TokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.userData = this.TokenStorageService.getUser();
@@ -123,21 +115,20 @@ export class TopbarComponent implements OnInit {
         /* IE/Edge */
         this.element.msRequestFullscreen();
       }
-    } 
-    // else {
-    //   if (this.document.exitFullscreen) {
-    //     this.document.exitFullscreen();
-    //   } else if (this.document.mozCancelFullScreen) {
-    //     /* Firefox */
-    //     this.document.mozCancelFullScreen();
-    //   } else if (this.document.webkitExitFullscreen) {
-    //     /* Chrome, Safari and Opera */
-    //     this.document.webkitExitFullscreen();
-    //   } else if (this.document.msExitFullscreen) {
-    //     /* IE/Edge */
-    //     this.document.msExitFullscreen();
-    //   }
-    // }
+    } else {
+      if (this.document.exitFullscreen) {
+        this.document.exitFullscreen();
+      } else if (this.document.mozCancelFullScreen) {
+        /* Firefox */
+        this.document.mozCancelFullScreen();
+      } else if (this.document.webkitExitFullscreen) {
+        /* Chrome, Safari and Opera */
+        this.document.webkitExitFullscreen();
+      } else if (this.document.msExitFullscreen) {
+        /* IE/Edge */
+        this.document.msExitFullscreen();
+      }
+    }
   }
 
   /**

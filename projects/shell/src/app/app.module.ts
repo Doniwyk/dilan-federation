@@ -1,36 +1,62 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { loadRemoteModule } from '@angular-architects/module-federation';
-import { HomeComponent } from './home/home.component';
-import { LayoutsModule } from './layouts/layouts.module';
+
+import { LayoutsModule} from "./layouts/layouts.module";
+import { PagesModule } from "./pages/pages.module";
+
+// Auth
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from '../environments/environment';
+import { initFirebaseBackend } from './authUtils';
+import { FakeBackendInterceptor } from './core/helpers/fake-backend';
+import { ErrorInterceptor } from './core/helpers/error.interceptor';
+import { JwtInterceptor } from './core/helpers/jwt.interceptor';
+
+// Language
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+export function createTranslateLoader(http: HttpClient): any {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
+
+if (environment.defaultauth === 'firebase') {
+  initFirebaseBackend(environment.firebaseConfig);
+} else {
+  FakeBackendInterceptor;
+}
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
   ],
   imports: [
-    BrowserModule,
-    RouterModule.forRoot([
-      {
-        path: '',
-        component: HomeComponent,
-        pathMatch: 'full'
-      },
-      {
-        path: 'mfe1',
-        loadChildren: () => loadRemoteModule({
-          type: 'module',
-          remoteEntry: 'http://localhost:4201/remoteEntry.js',
-          exposedModule: './Module'
-        }).then(m => m.PagesModule)
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
       }
-    ]),
-    LayoutsModule
+    }),
+    BrowserAnimationsModule,
+    HttpClientModule,
+    BrowserModule,
+    AppRoutingModule,
+    LayoutsModule,
+    PagesModule,
+    NgbModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

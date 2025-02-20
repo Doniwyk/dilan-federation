@@ -66,9 +66,9 @@ export const MENU: MenuItem[] = [
   },
   {
     id: 14,
-    label: 'Pallet & Drum',
+    label: 'TEST MFE1',
     icon: 'ri-apps-2-line',
-    link: ''
+    link: '/pallet-drum'
   },
   {
     id: 55,
