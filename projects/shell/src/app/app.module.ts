@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { loadRemoteModule } from '@angular-architects/module-federation';
 import { HomeComponent } from './home/home.component';
+import { LayoutsModule } from './layouts/layouts.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { HomeComponent } from './home/home.component';
           exposedModule: './Module'
         }).then(m => m.PagesModule)
       }
-    ])
+    ]),
+    LayoutsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

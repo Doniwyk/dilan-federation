@@ -141,7 +141,11 @@
 						],
 						"scripts": [],
 						"extraWebpackConfig": "projects/mfe1/webpack.config.js",
-						"commonChunk": false
+						"commonChunk": false,
+						"allowedCommonJsDependencies": [
+							"lodash/debounce",
+							"lodash/throttle"
+						]
 					},
 					"configurations": {
 						"production": {
